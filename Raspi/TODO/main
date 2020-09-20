@@ -1,0 +1,13 @@
+#!/bin/bash 
+
+function root_check() {
+
+  if [[ "$EUID" -ne "0" ]];then
+    echo -e "Scripts must be run as root"
+    sleep 0.6
+    exit 1
+  fi
+}
+
+root_check
+./menu

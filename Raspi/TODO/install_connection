@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo cp NetworkManager/* /etc/NetworkManager/system-connections/
+sudo systemctl restart NetworkManager
