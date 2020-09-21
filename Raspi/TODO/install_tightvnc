@@ -17,3 +17,5 @@ if [[ ! -f "~/.vnc/passwd" ]]; then
 
   tightvncserver
 fi
+
+install_tightvnc_service
