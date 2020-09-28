@@ -1,7 +1,0 @@
-#!/bin/bash
-
-current_port=$(grep "Port " sshd_config | cut -d" " -f2)
-
-read -p "Enter a number between 1 - 65535 : " choice
-
-sed 's/Port `echo $current_port`/Port `echo $choice`/g' sshd_config

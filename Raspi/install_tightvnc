@@ -13,9 +13,9 @@ if [[ ! -f "/usr/bin/tightvncserver" ]]; then
   sudo apt install tightvncserver
 fi
 
-install_tightvnc_service
-
 if [[ ! -f "~/.vnc/passwd" ]]; then
 
-  sudo su -c tightvncserver pix
+  tightvncserver
 fi
+
+install_tightvnc_service
