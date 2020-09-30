@@ -1,20 +1,5 @@
 #!/bin/bash
 
-main
-
-function main() {
-	check_root
-	user_ask
-	user_check
-	user_add
-	user_group
-}
-
-function user_group() {
-	user_group_grep
-	user_group_add
-}
-
 function check_root() {
 	if [ "$UID" -ne 0 ]; then
 		echo "run script as root."
@@ -43,3 +28,18 @@ function user_group_grep() {
 function user_group_add() {
 	usermod -aG $(echo $(echo ${id_user} | sed 's/ /,/g') $(echo ${username_clean}))
 }
+
+function user_group() {
+	user_group_grep
+	user_group_add
+}
+
+function main() {
+	check_root
+	user_ask
+	user_check
+	user_add
+	user_group
+}
+
+main

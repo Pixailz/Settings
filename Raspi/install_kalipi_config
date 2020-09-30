@@ -1,5 +1,5 @@
 #!/bin/bash
 
 wget -O kalipi-config https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/kalipi-config/kalipi-config
-sudo chmod +x kalipi-config
-sudo cp kalipi-config /usr/bin/
+chmod +x kalipi-config
+cp kalipi-config /usr/bin/

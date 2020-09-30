@@ -25,11 +25,11 @@ function configure_sshd_check() {
       sleep 1.2
     elif [[ "$confirm_ssh" == "y" ]] && [[ "$1" -eq "1" ]]; then
 
-      sudo apt install openssh-server
+      apt install openssh-server
       loop_ssh=false
     elif [[ "$confirm_ssh" == "y" ]] && [[ "$1" -eq "2" ]]; then
       
-      sudo dpkg --reconfigure openssh-server
+      dpkg --reconfigure openssh-server
       loop_ssh=false
     elif [[ "$confirm_ssh" == "n" ]]; then
 

@@ -45,15 +45,27 @@ function print_color() {
   printf "${green}green${reset}\n${red}red${reset}\n${yellow}yellow${reset}\n${blue}blue${reset}\n${lgreen}lgreen${reset}\n${lyellow}lyellow${reset}\n${lblue}lblue${reset}\n${lmagenta}lmagenta${reset}\n${lcyan}lcyan${reset}\n${blink_red}blink_red${reset}\n"
 }
 
+function print(){
+  declare -a to_print=("$@")
+  
+  i="1"
+  clear
+  question
+  for content in "${to_print[@]}"; do
+    answer "$i" "$content"
+    let i++
+  done
+}
+
 function choice() {
   local nb_choice=$1
   check="0"
   
   prompt
-  read -n 1 
-  echo -e ""
+  read
 
-  REPLY=$(echo $REPLY | tr '[A-Z]' '[a-z]')
+  REPLY=${REPLY:0:1}
+  REPLY=`echo $REPLY | tr '[A-Z]' '[a-z]'`
 
   if [[ "$REPLY" == q ]]; then
     info "Good Bye"
@@ -69,6 +81,7 @@ function choice() {
 function loop() {
   while $loop; do
     `echo $1`
+    choice $?
     return_code=$?
     if [[ "$check" == "1" ]]; then
       return ${return_code}
@@ -76,26 +89,39 @@ function loop() {
   done
 }
 
-function menu_print() {
-  clear
-  question "What do you wan't to do ?"
-  answer 1 "Install TightVNCServer"
-  answer 2 "Copy files in NetworkManager"
-  answer 3 "Install kalipi-config"
-  answer 4 "Configure SSH server port"
-  menu_print_nb_choice="4"
+function main_menu() {
+  local main_menu_print=(
+    "Install TightVNCServer"
+    "Copy files in NetworkManager"
+    "Install kalipi-config"
+    "Configure SSH server port"
+  )
+  print "${main_menu_print[@]}"
+  return ${#main_menu_print[*]}
 }
 
-function menu() {
-  menu_print
-  choice ${menu_print_nb_choice}
+function main_menu_2() {
+  local main_menu_2_print=(
+    "FUCK"
+    "YOU"
+    "THIS"
+    "IS"
+    "A"
+    "TEST"
+  )
+  print "${main_menu_2_print[@]}"
+  return ${#main_menu_2_print[*]}
 }
 
 function main() {
   #root_check
   #print_color
-  loop "menu"
-  echo $?
+  loop "main_menu"
+  main_menu_answer=$?
+  loop "main_menu_2"
+  main_menu_2_answer=$?
+  echo $main_menu_answer
+  echo $main_menu_2_answer
 }
 
 main
