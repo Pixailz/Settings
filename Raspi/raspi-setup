@@ -125,7 +125,7 @@ function setup_account() {
   question "Enter an user name to create : "
   
   prompt
-	read username_brut
+  read username_brut
 
   username_first=$(echo ${username_brut::1} | tr '[A-Z]' '[a-z]')
 	username_clean=$(echo "${username_first}${username_brut:1}")
