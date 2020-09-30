@@ -121,37 +121,19 @@ function main_menu_choose() {
   fi
 }
 
-function setup_user_ask() {
-	read -p "Enter an user name to create : " username_brut
-}
-
-function setup_user_check() {
-	username_first=$(echo ${username_brut::1} | tr '[A-Z]' '[a-z]')
-	username_clean=$(echo "${username_first}${username_brut:1}")
-}
-
-function setup_user_add() {
-	adduser $username_clean
-}
-
-function setup_user_group_grep() {
-	id_user=$(id $SUDO_USER | cut -d"," -f2- | sed 's/,/\n/g' | cut -d"(" -f2- | cut -d")" -f-1)	
-}
-
-function setup_user_group_add() {
-	usermod -aG $(echo $(echo ${id_user} | sed 's/ /,/g') $(echo ${username_clean}))
-}
-
-function setup_user_group() {
-	setup_user_group_grep
-	setup_user_group_add
-}
-
 function setup_account() {
-	setup_user_ask
-	setup_user_check
-	setup_user_add
-	setup_user_group
+  question "Enter an user name to create : "
+  
+  prompt
+	read username_brut
+
+  username_first=$(echo ${username_brut::1} | tr '[A-Z]' '[a-z]')
+	username_clean=$(echo "${username_first}${username_brut:1}")
+
+  adduser $username_clean
+
+  id_user=$(id $SUDO_USER | cut -d"," -f2- | sed 's/,/\n/g' | cut -d"(" -f2- | cut -d")" -f-1)
+  usermod -aG $(echo $(echo ${id_user} | sed 's/ /,/g') $(echo ${username_clean}))
 }
 
 function install_tightvnc() {
