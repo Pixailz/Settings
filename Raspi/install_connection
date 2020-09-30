@@ -1,4 +1,0 @@
-#!/bin/bash
-
-cp NetworkManager/* /etc/NetworkManager/system-connections/
-systemctl restart NetworkManager

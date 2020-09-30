@@ -1,4 +1,10 @@
-#!/bin/bash 
+#!/bin/bash
+
+#TESTING FUNCTION (TO REMOVE)
+function print_color() {
+  printf "${green}green${reset}\n${red}red${reset}\n${yellow}yellow${reset}\n${blue}blue${reset}\n${lgreen}lgreen${reset}\n${lyellow}lyellow${reset}\n${lblue}lblue${reset}\n${lmagenta}lmagenta${reset}\n${lcyan}lcyan${reset}\n${blink_red}blink_red${reset}\n"
+}
+
 # Bash Color
 green='\e[32m'
 red='\e[31m'
@@ -19,7 +25,7 @@ function warning() {
 }
 
 function question() {
-  printf "${green}[ QUESTION ]${reset} $*${reset}\n"
+  printf "${blue}[ QUESTION ]${reset} $*${reset}\n"
 }
 
 function answer() {
@@ -39,10 +45,6 @@ function root_check() {
     warning "Scripts must be run as root."
     exit 1
   fi
-}
-
-function print_color() {
-  printf "${green}green${reset}\n${red}red${reset}\n${yellow}yellow${reset}\n${blue}blue${reset}\n${lgreen}lgreen${reset}\n${lyellow}lyellow${reset}\n${lblue}lblue${reset}\n${lmagenta}lmagenta${reset}\n${lcyan}lcyan${reset}\n${blink_red}blink_red${reset}\n"
 }
 
 function print(){
@@ -81,8 +83,11 @@ function choice() {
 function loop() {
   while $loop; do
     `echo $1`
-    choice $?
+
+    last_max_choice=$?
+    choice ${last_max_choice}
     return_code=$?
+
     if [[ "$check" == "1" ]]; then
       return ${return_code}
     fi
@@ -91,8 +96,8 @@ function loop() {
 
 function main_menu() {
   local main_menu_print=(
+    "Setup an Account"
     "Install TightVNCServer"
-    "Copy files in NetworkManager"
     "Install kalipi-config"
     "Configure SSH server port"
   )
@@ -100,28 +105,108 @@ function main_menu() {
   return ${#main_menu_print[*]}
 }
 
-function main_menu_2() {
-  local main_menu_2_print=(
-    "FUCK"
-    "YOU"
-    "THIS"
-    "IS"
-    "A"
-    "TEST"
-  )
-  print "${main_menu_2_print[@]}"
-  return ${#main_menu_2_print[*]}
+function main_menu_choose() {
+  choice=$1
+
+  clear
+  
+  if [[ "$choice" == "1" ]]; then
+    setup_account
+  elif [[ "$choice" == "2" ]]; then
+    install_tightvnc
+  elif [[ "$choice" == "3" ]]; then
+    install_kalipi_config
+  elif [[ "$choice" == "4" ]]; then
+    configure_sshd
+  fi
+}
+
+function setup_user_ask() {
+	read -p "Enter an user name to create : " username_brut
+}
+
+function setup_user_check() {
+	username_first=$(echo ${username_brut::1} | tr '[A-Z]' '[a-z]')
+	username_clean=$(echo "${username_first}${username_brut:1}")
+}
+
+function setup_user_add() {
+	adduser $username_clean
+}
+
+function setup_user_group_grep() {
+	id_user=$(id $SUDO_USER | cut -d"," -f2- | sed 's/,/\n/g' | cut -d"(" -f2- | cut -d")" -f-1)	
+}
+
+function setup_user_group_add() {
+	usermod -aG $(echo $(echo ${id_user} | sed 's/ /,/g') $(echo ${username_clean}))
+}
+
+function setup_user_group() {
+	setup_user_group_grep
+	setup_user_group_add
+}
+
+function setup_account() {
+	setup_user_ask
+	setup_user_check
+	setup_user_add
+	setup_user_group
+}
+
+function install_tightvnc() {
+  if [[ ! -f "/usr/bin/tightvncserver" ]]; then
+    apt install tightvncserver
+  fi
+
+  if [[ ! -f "~/.vnc/passwd" ]]; then
+    tightvncserver
+  fi
+
+  tee -a /etc/systemd/system/tightvncserver.service > /dev/null <<EOT
+  [Unit]
+  Description=TightVNC remote desktop server
+  After=sshd.service
+
+  [Service]
+  Type=dbus
+
+  # Default Config
+  #ExecStart=/usr/bin/tightvncserver :1
+
+  # Custom
+  ExecStart=/usr/bin/tightvncserver :1 -localhost -geometry 1920x1080 -depth 24
+
+  # Mac screen
+  #ExecStart=/usr/bin/tightvncserver :1 -localhost -geometry 1440x900 -depth 24
+  User=pix
+  Type=forking
+
+  [Install]
+  WantedBy=multi-user.target
+EOT
+  chown root:root /etc/systemd/system/tightvncserver.service
+  chmod 755 /etc/systemd/system/tightvncserver.service
+  systemctl enable tightvncserver.service
+}
+
+function install_kalipi_config() {
+  wget -O kalipi-config https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/kalipi-config/kalipi-config
+  chmod +x kalipi-config
+  cp kalipi-config /usr/bin/
+}
+
+function configure_sshd() {
+  warning "IN DEVELLOPEMENT"
 }
 
 function main() {
   #root_check
   #print_color
+
   loop "main_menu"
   main_menu_answer=$?
-  loop "main_menu_2"
-  main_menu_2_answer=$?
-  echo $main_menu_answer
-  echo $main_menu_2_answer
+  main_menu_choose "$main_menu_answer"
 }
 
 main
