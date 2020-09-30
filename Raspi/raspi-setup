@@ -110,15 +110,12 @@ function main_menu_choose() {
 
   clear
   
-  if [[ "$choice" == "1" ]]; then
-    setup_account
-  elif [[ "$choice" == "2" ]]; then
-    install_tightvnc
-  elif [[ "$choice" == "3" ]]; then
-    install_kalipi_config
-  elif [[ "$choice" == "4" ]]; then
-    configure_sshd
-  fi
+  case $choice in
+    1) echo setup_account ;;
+    2) echo install_tightvnc ;;
+    3) echo install_kalipi_config ;;
+    4) echo configure_sshd ;;  
+  esac  
 }
 
 function setup_account() {
