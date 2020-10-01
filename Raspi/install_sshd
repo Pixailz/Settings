@@ -1,45 +1,5 @@
 #!/bin/bash
 
-function configure_sshd_check() {
-  
-  loop_ssh=true
-
-  while $loop_ssh; do
-
-    if [[ "$1" -eq "1" ]]; then
-
-      read -p "Do you wan't to install it ? (y/n)" -n 1 confirm_ssh
-      echo ""
-    fi
-    if [[ "$1" -eq "2" ]]; then
-
-      read -p "Do you wan't to re-configure it ? (y/n)" -n 1 confirm_ssh
-      echo ""
-    fi
-      
-    confirm_ssh="$(echo $confirm_ssh | tr '[A-Z]' '[a-z]')"
-
-    if [[ "$confirm_ssh" != "y" ]] && [[ "$confirm_ssh" != "n" ]]; then
-      
-      echo -e "Make a better choice .."
-      sleep 1.2
-    elif [[ "$confirm_ssh" == "y" ]] && [[ "$1" -eq "1" ]]; then
-
-      apt install openssh-server
-      loop_ssh=false
-    elif [[ "$confirm_ssh" == "y" ]] && [[ "$1" -eq "2" ]]; then
-      
-      dpkg --reconfigure openssh-server
-      loop_ssh=false
-    elif [[ "$confirm_ssh" == "n" ]]; then
-
-      echo -e "Have a nice day ;) .."
-      sleep 0.5
-      exit 255
-    fi
-  done
-}
-
 function configure_sshd_port() {
   
   loop_ssh_port_confirm=true
@@ -89,17 +49,6 @@ function configure_sshd_port() {
     fi
   done
   
-}
-
-function isolate() {
-if [[ ! -z /etc/ssh/sshd_config ]]; then
-  echo -e "openssh-server isn't installed yet"
-  configure_sshd_ask 1
-
-else
-  echo -e "openssh-server is installed"
-  configure_sshd_ask 2
-fi
 }
 
 configure_sshd_port
