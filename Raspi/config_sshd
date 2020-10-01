@@ -1,0 +1,152 @@
+#!/bin/bash
+# Bash Color
+green='\e[32m'
+red='\e[31m'
+yellow='\e[33m'
+blue='\e[34m'
+lgreen='\e[92m'
+lyellow='\e[93m'
+lblue='\e[94m'
+lmagenta='\e[95m'
+lcyan='\e[96m'
+blink_red='\033[05;31m'
+restore='\033[0m'
+reset='\e[0m'
+
+function warning() {
+  printf "${red}[ WARNING  ]${reset} $*${reset}\n"
+  sleep 1.5
+}
+
+function question() {
+  printf "${blue}[ QUESTION ]${reset} $*${reset}\n"
+}
+
+function answer() {
+  printf "${lgreen}[${reset}$1${lgreen}]${reset}$2${reset}\n"
+}
+
+function info() {
+  printf "${yellow}[   INFO   ]${reset} $*${reset}\n"
+}
+
+function prompt() {
+  printf "${blue}[ WAITING..]: ${reset}"
+}
+
+function ask() {
+  local prompt=$1
+  local default=$2
+  local choice=""
+  local loop="true"
+  
+  while $loop; do
+    if [[ "$default" == "y" ]]; then
+      printf "${blue}[ASK (Y/n) ]${reset} ${prompt}${reset}"
+      read choice
+    elif [[ "$default" == "n" ]]; then
+      printf "${blue}[ASK (y/N) ]${reset} ${prompt}${reset}"
+      read choice
+    else
+      printf "${blue}[ASK (y/n) ]${reset} ${prompt}${reset}"
+      read choice
+    fi
+
+    choice=${choice:0:1}
+    choice=`echo $choice | tr '[A-Z]' '[a-z]'`
+
+    if [[ "$choice" != "y" ]] && [[ "$choice" != "n" ]]; then
+      warning "Wrong Choice"
+    elif [[ "$choice" == "y" ]]; then return 1;
+    elif [[ "$choice" == "n" ]]; then return 0; 
+    fi
+  done
+}
+
+function root_check() {
+  if [[ "$EUID" -ne "0" ]];then
+    warning "Scripts must be run as root."
+    exit 1
+  fi
+}
+
+function print(){
+  declare -a to_print=("$@")
+  
+  i="1"
+  clear
+  question
+  for content in "${to_print[@]}"; do
+    answer "$i" "$content"
+    let i++
+  done
+}
+
+function choice() {
+  local nb_choice=$1
+  check="0"
+  
+  prompt
+  read
+
+  REPLY=${REPLY:0:1}
+  REPLY=`echo $REPLY | tr '[A-Z]' '[a-z]'`
+
+  if [[ "$REPLY" == q ]]; then
+    info "Good Bye"
+    exit 1
+  elif [[ "$REPLY" < 1 ]] || [[ "$REPLY" > "$nb_choice" ]]; then
+    warning "Wrong Choice"
+  else
+    check="1"
+    return ${REPLY}
+  fi
+}
+
+function loop() {
+  while $loop; do
+    `echo $1`
+
+    last_max_choice=$?
+    choice ${last_max_choice}
+    return_code_choice=$?
+
+    if [[ "$check" == "1" ]]; then
+      return ${return_code_choice}
+    fi
+  done
+}
+
+function configure_sshd_check_installed() {
+  if [[ ! -z /etc/ssh/sshd_config ]]; then
+    sshd_installed=0
+    info "openssh-server isn't installed yet"
+    ask "Do you wan't to install it ? " y
+    return_code_ask=$?
+  else
+    sshd_installed=1
+    info "openssh-server is installed"
+    ask "Do you wan't to re-configure it ?"
+    return_code_ask=$?
+  fi
+
+  if [[ "$sshd_installed" == "0" ]]; then
+    if [[ "$return_code_ask" == "1" ]]; then apt install openssh-server;
+    elif [[ "$return_code_ask" == "0" ]]; then
+      warning "openssh-server isn't installed"
+      exit 255
+    fi
+  elif [[ "$sshd_installed" == "1" ]]; then
+    if [[ "$return_code_ask" == "1" ]]; then dpkg --reconfigure openssh-server;
+    elif [[ "$return_code_ask" == "0" ]]; then info "Don't doing anything";
+    fi
+  fi
+
+}
+
+function configure_sshd() {
+  clear
+  configure_sshd_check_installed
+}
+
+configure_sshd

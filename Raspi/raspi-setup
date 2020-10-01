@@ -143,26 +143,26 @@ function install_tightvnc() {
   fi
 
   tee -a /etc/systemd/system/tightvncserver.service > /dev/null <<EOT
-  [Unit]
-  Description=TightVNC remote desktop server
-  After=sshd.service
+[Unit]
+Description=TightVNC remote desktop server
+After=sshd.service
 
-  [Service]
-  Type=dbus
+[Service]
+Type=dbus
 
-  # Default Config
-  #ExecStart=/usr/bin/tightvncserver :1
+# Default Config
+#ExecStart=/usr/bin/tightvncserver :1
 
-  # Custom
-  ExecStart=/usr/bin/tightvncserver :1 -localhost -geometry 1920x1080 -depth 24
+# Custom
+ExecStart=/usr/bin/tightvncserver :1 -localhost -geometry 1920x1080 -depth 24
 
-  # Mac screen
-  #ExecStart=/usr/bin/tightvncserver :1 -localhost -geometry 1440x900 -depth 24
-  User=pix
-  Type=forking
+# Mac screen
+#ExecStart=/usr/bin/tightvncserver :1 -localhost -geometry 1440x900 -depth 24
+User=pix
+Type=forking
 
-  [Install]
-  WantedBy=multi-user.target
+[Install]
+WantedBy=multi-user.target
 EOT
   chown root:root /etc/systemd/system/tightvncserver.service
   chmod 755 /etc/systemd/system/tightvncserver.service
