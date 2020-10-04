@@ -40,6 +40,35 @@ function prompt() {
   printf "${blue}[ WAITING..]: ${reset}"
 }
 
+function ask() {
+  local prompt=$1
+  local default=$2
+  local choice=""
+  local loop="true"
+  
+  while $loop; do
+    if [[ "$default" == "y" ]]; then
+      printf "${blue}[ASK (Y/n) ]${reset} ${prompt} ${reset}"
+      read choice
+    elif [[ "$default" == "n" ]]; then
+      printf "${blue}[ASK (y/N) ]${reset} ${prompt} ${reset}"
+      read choice
+    else
+      printf "${blue}[ASK (y/n) ]${reset} ${prompt} ${reset}"
+      read choice
+    fi
+
+    choice=${choice:0:1}
+    choice=`echo $choice | tr '[A-Z]' '[a-z]'`
+
+    if [[ "$choice" != "y" ]] && [[ "$choice" != "n" ]]; then
+      warning "Wrong Choice"
+    elif [[ "$choice" == "y" ]]; then return 1;
+    elif [[ "$choice" == "n" ]]; then return 0; 
+    fi
+  done
+}
+
 function root_check() {
   if [[ "$EUID" -ne "0" ]];then
     warning "Scripts must be run as root."
@@ -111,10 +140,10 @@ function main_menu_choose() {
   clear
   
   case $choice in
-    1) echo setup_account ;;
-    2) echo install_tightvnc ;;
-    3) echo install_kalipi_config ;;
-    4) echo configure_sshd ;;  
+    1) setup_account;;
+    2) install_tightvnc;;
+    3) install_kalipi_config;;
+    4) config_sshd;;  
   esac  
 }
 
@@ -175,8 +204,76 @@ function install_kalipi_config() {
   cp kalipi-config /usr/bin/
 }
 
-function configure_sshd() {
-  warning "IN DEVELLOPEMENT"
+function config_sshd_check_installed() {
+  if [[ ! -z /etc/ssh/sshd_config ]]; then
+    sshd_installed=0
+    info "openssh-server isn't installed yet"
+    ask "Do you wan't to install it ?" y
+    return_code_check_installed=$?
+  else
+    sshd_installed=1
+    info "openssh-server is installed"
+    ask "Do you wan't to re-configure it ?"
+    return_code_check_installed=$?
+  fi
+
+  if [[ "$sshd_installed" == "0" ]]; then
+    if [[ "$return_code_check_installed" == "1" ]]; then apt install openssh-server;
+    elif [[ "$return_code_check_installed" == "0" ]]; then
+      warning "openssh-server isn't installed"
+      exit 255
+    fi
+  elif [[ "$sshd_installed" == "1" ]]; then
+    if [[ "$return_code_check_installed" == "1" ]]; then dpkg --reconfigure openssh-server;
+    elif [[ "$return_code_check_installed" == "0" ]]; then info "Don't doing anything";
+    fi
+  fi
+
+}
+
+function config_sshd_port_grep() {
+  current_port=$(grep "Port " /etc/ssh/sshd_config | cut -d" " -f2)
+  info "Current port is : ${current_port}"
+}
+
+function config_sshd_port_ask() {
+  local loop=true
+
+  while $loop; do
+    clear
+    config_sshd_port_grep
+
+    question "Enter a desired port : "
+    prompt
+    read port_to_change
+
+    if ! [[ "$port_to_change" =~ ^[0-9]+$ ]]; then waring "Enter a number";
+    elif [[ "$port_to_change" -lt "1" ]] || [[ "$port_to_change" -gt "65535" ]]; then warning "Enter a number in the good range (1-65535)"
+    else loop=false
+    fi
+  done
+
+  sed -i "/Port / s/${current_port}/${port_to_change}/" /etc/ssh/sshd_config
+  systemctl restart ssh
+}
+
+function config_sshd_port_grep_ask() {
+  config_sshd_port_grep
+  ask "Do you wan't to change it ?" y
+  return_code_port=$?
+
+  if [[ "$return_code_port" == "1" ]]; then
+    config_sshd_port_ask
+  elif [[ "$return_code_port" == "0" ]]; then
+    info "don\'t do anything"
+  fi
+}
+
+
+function config_sshd() {
+  clear
+  config_sshd_check_installed
+  config_sshd_port_grep_ask
 }
 
 function main() {
