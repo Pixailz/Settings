@@ -5,8 +5,6 @@ function configure_sshd_port() {
   loop_ssh_port_confirm=true
 
   while $loop_ssh_port_confirm; do
-
-    echo -e "Current port is $current_port"
   
     read -p "Do you wan't to change it ? (y/n) " -n 1 confirm_ssh_port
     echo ""
@@ -50,5 +48,3 @@ function configure_sshd_port() {
   done
   
 }
-
-configure_sshd_port

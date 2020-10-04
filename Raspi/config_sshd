@@ -42,13 +42,13 @@ function ask() {
   
   while $loop; do
     if [[ "$default" == "y" ]]; then
-      printf "${blue}[ASK (Y/n) ]${reset} ${prompt}${reset}"
+      printf "${blue}[ASK (Y/n) ]${reset} ${prompt} ${reset}"
       read choice
     elif [[ "$default" == "n" ]]; then
-      printf "${blue}[ASK (y/N) ]${reset} ${prompt}${reset}"
+      printf "${blue}[ASK (y/N) ]${reset} ${prompt} ${reset}"
       read choice
     else
-      printf "${blue}[ASK (y/n) ]${reset} ${prompt}${reset}"
+      printf "${blue}[ASK (y/n) ]${reset} ${prompt} ${reset}"
       read choice
     fi
 
@@ -117,36 +117,55 @@ function loop() {
   done
 }
 
-function configure_sshd_check_installed() {
+function config_sshd_check_installed() {
   if [[ ! -z /etc/ssh/sshd_config ]]; then
     sshd_installed=0
     info "openssh-server isn't installed yet"
-    ask "Do you wan't to install it ? " y
-    return_code_ask=$?
+    ask "Do you wan't to install it ?" y
+    return_code_check_installed=$?
   else
     sshd_installed=1
     info "openssh-server is installed"
     ask "Do you wan't to re-configure it ?"
-    return_code_ask=$?
+    return_code_check_installed=$?
   fi
 
   if [[ "$sshd_installed" == "0" ]]; then
-    if [[ "$return_code_ask" == "1" ]]; then apt install openssh-server;
-    elif [[ "$return_code_ask" == "0" ]]; then
+    if [[ "$return_code_check_installed" == "1" ]]; then apt install openssh-server;
+    elif [[ "$return_code_check_installed" == "0" ]]; then
       warning "openssh-server isn't installed"
       exit 255
     fi
   elif [[ "$sshd_installed" == "1" ]]; then
-    if [[ "$return_code_ask" == "1" ]]; then dpkg --reconfigure openssh-server;
-    elif [[ "$return_code_ask" == "0" ]]; then info "Don't doing anything";
+    if [[ "$return_code_check_installed" == "1" ]]; then dpkg --reconfigure openssh-server;
+    elif [[ "$return_code_check_installed" == "0" ]]; then info "Don't doing anything";
     fi
   fi
 
 }
 
-function configure_sshd() {
-  clear
-  configure_sshd_check_installed
+function config_sshd_port_ask() {
+  
 }
 
-configure_sshd
+function config_sshd_port_grep() {
+  current_port=$(grep "Port " /etc/ssh/sshd_config | cut -d" " -f2)
+  info "Current port is : ${current_port}"
+
+  ask "Do you wan't to change it ?" y
+  return_code_port=$?
+
+  if [[ "$return_code_port" == "1" ]]; then
+    config_sshd_port_ask
+  elif [[ "$return_code_port" == "0" ]]; then
+    info "don\'t do anything"
+  fi
+}
+
+function config_sshd() {
+  clear
+  #config_sshd_check_installed
+  config_sshd_port
+}
+
+config_sshd
