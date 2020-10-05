@@ -1,6 +1,6 @@
 #!/bin/bash
-
-#TESTING FUNCTION (TO REMOVE)
+# initial bash setup script for raspi
+# TESTING FUNCTION (TO REMOVE)
 function print_color() {
   printf "${green}green${reset}\n${red}red${reset}\n${yellow}yellow${reset}\n${blue}blue${reset}\n${lgreen}lgreen${reset}\n${lyellow}lyellow${reset}\n${lblue}lblue${reset}\n${lmagenta}lmagenta${reset}\n${lcyan}lcyan${reset}\n${blink_red}blink_red${reset}\n"
 }
@@ -78,7 +78,6 @@ function root_check() {
 
 function print(){
   declare -a to_print=("$@")
-  
   i="1"
   clear
   question
@@ -91,15 +90,12 @@ function print(){
 function choice() {
   local nb_choice=$1
   check="0"
-  
   prompt
   read
-
   REPLY=${REPLY:0:1}
   REPLY=`echo $REPLY | tr '[A-Z]' '[a-z]'`
-
   if [[ "$REPLY" == q ]]; then
-    info "Good Bye"
+    warning "Good Bye"
     exit 1
   elif [[ "$REPLY" < 1 ]] || [[ "$REPLY" > "$nb_choice" ]]; then
     warning "Wrong Choice"
@@ -110,13 +106,12 @@ function choice() {
 }
 
 function loop() {
+  local loop="true"
   while $loop; do
     `echo $1`
-
-    last_max_choice=$?
-    choice ${last_max_choice}
+    last_max_printed=$?
+    choice ${last_max_printed}
     return_code=$?
-
     if [[ "$check" == "1" ]]; then
       return ${return_code}
     fi
@@ -224,7 +219,7 @@ function config_sshd_check_installed() {
       exit 255
     fi
   elif [[ "$sshd_installed" == "1" ]]; then
-    if [[ "$return_code_check_installed" == "1" ]]; then dpkg --reconfigure openssh-server;
+    if [[ "$return_code_check_installed" == "1" ]]; then dpkg --reconfigure openssh-server;
     elif [[ "$return_code_check_installed" == "0" ]]; then info "Don't doing anything";
     fi
   fi
