@@ -200,7 +200,7 @@ function install_kalipi_config() {
 }
 
 function config_sshd_check_installed() {
-  if [[ ! -z /etc/ssh/sshd_config ]]; then
+  if [[ ! -f /etc/ssh/sshd_config ]]; then
     sshd_installed=0
     info "openssh-server isn't installed yet"
     ask "Do you wan't to install it ?" y
@@ -272,9 +272,8 @@ function config_sshd() {
 }
 
 function main() {
-  #root_check
   #print_color
-
+  root_check
   loop "main_menu"
   main_menu_answer=$?
   main_menu_choose "$main_menu_answer"
