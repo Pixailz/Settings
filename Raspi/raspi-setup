@@ -197,6 +197,7 @@ function install_kalipi_config() {
   wget -O kalipi-config https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/kalipi-config/kalipi-config
   chmod +x kalipi-config
   cp kalipi-config /usr/bin/
+  apt install lua5.1
 }
 
 function config_sshd_check_installed() {
