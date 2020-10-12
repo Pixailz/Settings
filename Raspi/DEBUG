@@ -23,7 +23,7 @@ reset='\e[0m'
 ##############################
 # Prompt colored
 function warning() {
-  printf "${red}[ WARNING  ]${reset} $*${reset}\n"
+  printf "${blink_red}[ WARNING  ]${reset} $*${reset}\n"
   sleep 1.5
 }
 
@@ -36,7 +36,7 @@ function answer() {
 }
 
 function info() {
-  printf "${yellow}[   INFO   ]${reset} $*${reset}\n"
+  printf "${red}[   INFO   ]${reset} $*${reset}\n"
 }
 
 function prompt() {
@@ -46,35 +46,6 @@ function prompt() {
 
 ##############################
 # some utils function
-function ask() {
-  local prompt=$1
-  local default=$2
-  local choice=""
-  local loop="true"
-
-  while $loop; do
-    if [[ "$default" == "y" ]]; then
-      printf "${blue}[ASK (Y/n) ]${reset} ${prompt} ${reset}"
-      read choice
-    elif [[ "$default" == "n" ]]; then
-      printf "${blue}[ASK (y/N) ]${reset} ${prompt} ${reset}"
-      read choice
-    else
-      printf "${blue}[ASK (y/n) ]${reset} ${prompt} ${reset}"
-      read choice
-    fi
-
-    choice=${choice:0:1}
-    choice=`echo $choice | tr '[A-Z]' '[a-z]'`
-
-    if [[ "$choice" != "y" ]] && [[ "$choice" != "n" ]]; then
-      warning "Wrong Choice"
-    elif [[ "$choice" == "y" ]]; then return 1;
-    elif [[ "$choice" == "n" ]]; then return 0;
-    fi
-  done
-}
-
 function root_check() {
   if [[ "$EUID" -ne "0" ]];then
     warning "Scripts must be run as root."
@@ -120,6 +91,35 @@ function loop() {
     return_code=$?
     if [[ "$check" == "1" ]]; then
       return ${return_code}
+    fi
+  done
+}
+
+function ask() {
+  local prompt=$1
+  local default=$2
+  local choice=""
+  local loop="true"
+
+  while $loop; do
+    if [[ "$default" == "y" ]]; then
+      printf "${blue}[ASK (Y/n) ]${reset} ${prompt} ${reset}"
+      read choice
+    elif [[ "$default" == "n" ]]; then
+      printf "${blue}[ASK (y/N) ]${reset} ${prompt} ${reset}"
+      read choice
+    else
+      printf "${blue}[ASK (y/n) ]${reset} ${prompt} ${reset}"
+      read choice
+    fi
+
+    choice=${choice:0:1}
+    choice=`echo $choice | tr '[A-Z]' '[a-z]'`
+
+    if [[ "$choice" != "y" ]] && [[ "$choice" != "n" ]]; then
+      warning "Wrong Choice"
+    elif [[ "$choice" == "y" ]]; then return 1;
+    elif [[ "$choice" == "n" ]]; then return 0;
     fi
   done
 }
@@ -256,7 +256,7 @@ function config_sshd_port_ask() {
     prompt
     read port_to_change
 
-    if ! [[ "$port_to_change" =~ ^[0-9]+$ ]]; then waring "Enter a number";
+    if ! [[ "$port_to_change" =~ ^[0-9]+$ ]]; then warning "Enter a number";
     elif [[ "$port_to_change" -lt "1" ]] || [[ "$port_to_change" -gt "65535" ]]; then warning "Enter a number in the good range (1-65535)"
     else loop=false
     fi
@@ -291,5 +291,5 @@ function main() {
   main_menu_answer=$?
   main_menu_choose "$main_menu_answer"
 }
-
+#print_color
 main
