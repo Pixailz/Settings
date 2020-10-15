@@ -3,7 +3,7 @@
 
 ##############################
 # Bash Color
-warning='\033[1;31m'
+warning='\033[1;5;31m'
 blue='\e[34m'
 answer='\033[1;92m'
 info='\033[1;32m'
@@ -49,7 +49,7 @@ function install() {
 function root_check() {
   if [[ "$EUID" -ne "0" ]];then
     warning "Scripts must be run as root."
-    #TOUNCOMMENT exit 1
+    exit 1
   fi
 }
 
@@ -73,7 +73,7 @@ function choice() {
   REPLY=`echo $REPLY | tr '[A-Z]' '[a-z]'`
   if [[ "$REPLY" == q ]]; then
     warning "Good Bye"
-    #TOUNCOMMENT exit 1
+    exit 1
   elif [[ "$REPLY" < 1 ]] || [[ "$REPLY" > "$nb_choice" ]]; then
     warning "Wrong Choice"
   else
@@ -100,7 +100,6 @@ function ask() {
   local default=$2
   local choice=""
   local loop="true"
-
   while $loop; do
     if [[ "$default" == "y" ]]; then
       printf "${blue}[ASK (Y/n) ]${reset} ${prompt} ${reset}"
@@ -112,10 +111,8 @@ function ask() {
       printf "${blue}[ASK (y/n) ]${reset} ${prompt} ${reset}"
       read choice
     fi
-
     choice=${choice:0:1}
     choice=`echo $choice | tr '[A-Z]' '[a-z]'`
-
     if [[ "$choice" != "y" ]] && [[ "$choice" != "n" ]]; then
       warning "Wrong Choice"
     elif [[ "$choice" == "y" ]]; then return 1;
@@ -138,9 +135,7 @@ function main_menu() {
 
 function main_menu_choose() {
   choice=$1
-
   clear
-
   case $choice in
     1) setup_account;;
     2) install_tightvnc;;
@@ -157,64 +152,64 @@ function setup_account() {
   username_first=$(echo ${username_brut::1} | tr '[A-Z]' '[a-z]')
 	username_clean=$(echo "${username_first}${username_brut:1}")
   info "Add the user $username_clean"
-  #TOUNCOMMENT adduser $username_clean
+  adduser $username_clean
   info "Add proper groups id for $username_clean"
-  #TOUNCOMMENT id_user=$(id $SUDO_USER | cut -d"," -f2- | sed 's/,/\n/g' | cut -d"(" -f2- | cut -d")" -f-1)
-  #TOUNCOMMENT usermod -aG $(echo $(echo ${id_user} | sed 's/ /,/g') $(echo ${username_clean}))
+  id_user=$(id $SUDO_USER | cut -d"," -f2- | sed 's/,/\n/g' | cut -d"(" -f2- | cut -d")" -f-1)
+  usermod -aG $(echo $(echo ${id_user} | sed 's/ /,/g') $(echo ${username_clean}))
 }
 
 function install_tightvnc() {
   if [[ ! -f "/usr/bin/tightvncserver" ]]; then
     warning "tightvncserver not found"
     install "tightvncserver"
-    #TOUNCOMMENT apt install tightvncserver
+    apt install tightvncserver
   fi
 
   if [[ ! -f "~/.vnc/passwd" ]]; then
     warning "tightvncserver not configured"
     info "tightvncserver"
-    #TOUNCOMMENT tightvncserver
+    tightvncserver
   fi
   info "Creating tightvncserver.service"
-#TOUNCOMMENT   tee -a /etc/systemd/system/tightvncserver.service > /dev/null <<EOT
-#TOUNCOMMENT [Unit]
-#TOUNCOMMENT Description=TightVNC remote desktop server
-#TOUNCOMMENT After=sshd.service
-#TOUNCOMMENT
-#TOUNCOMMENT [Service]
-#TOUNCOMMENT Type=dbus
-#TOUNCOMMENT
-#TOUNCOMMENT # Default Config
-#TOUNCOMMENT #ExecStart=/usr/bin/tightvncserver :1
-#TOUNCOMMENT
-#TOUNCOMMENT # Custom
-#TOUNCOMMENT ExecStart=/usr/bin/tightvncserver :1 -localhost -geometry 1920x1080 -depth 24
-#TOUNCOMMENT
-#TOUNCOMMENT # Mac screen
-#TOUNCOMMENT #ExecStart=/usr/bin/tightvncserver :1 -localhost -geometry 1440x900 -depth 24
-#TOUNCOMMENT User=pix
-#TOUNCOMMENT Type=forking
-#TOUNCOMMENT
-#TOUNCOMMENT [Install]
-#TOUNCOMMENT WantedBy=multi-user.target
-#TOUNCOMMENT EOT
-  info "Adding propper permissions to tightvncserver.service"
-#TOUNCOMMENT   chown root:root /etc/systemd/system/tightvncserver.service
-#TOUNCOMMENT   chmod 755 /etc/systemd/system/tightvncserver.service
+  tee -a /etc/systemd/system/tightvncserver.service > /dev/null <<EOT
+[Unit]
+Description=TightVNC remote desktop server
+After=sshd.service
+
+[Service]
+Type=dbus
+
+# Default Config
+#ExecStart=/usr/bin/tightvncserver :1
+
+# Custom
+ExecStart=/usr/bin/tightvncserver :1 -localhost -geometry 1920x1080 -depth 24
+
+# Mac screen
+#ExecStart=/usr/bin/tightvncserver :1 -localhost -geometry 1440x900 -depth 24
+User=pix
+Type=forking
+
+[Install]
+WantedBy=multi-user.target
+EOT
+  info "Adding right permissions to tightvncserver.service"
+  chown root:root /etc/systemd/system/tightvncserver.service
+  chmod 755 /etc/systemd/system/tightvncserver.service
   info "Enabling tightvncserver.service with systemctl"
-#TOUNCOMMENT   systemctl enable tightvncserver.service
+  systemctl enable tightvncserver.service
 }
 
 function install_kalipi_config() {
   download "kalipi-config"
-#TOUNCOMMENT   wget -O kalipi-config https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/kalipi-config/kalipi-config
+  wget -O kalipi-config https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/kalipi-config/kalipi-config
   info "Giving execute permissions to kalipi-config"
-#TOUNCOMMENT   chmod +x kalipi-config
+  chmod +x kalipi-config
   info "Moving kalipi-config to /usr/bin"
-#TOUNCOMMENT   mv kalipi-config /usr/bin/
+  mv kalipi-config /usr/bin/
   info "Installing depedencies"
   install "lua5.1"
-#TOUNCOMMENT   apt install lua5.1 -y
+  apt install lua5.1 -y
 }
 
 function config_sshd_check_installed() {
@@ -233,15 +228,15 @@ function config_sshd_check_installed() {
   if [[ "$sshd_installed" == "0" ]]; then
     if [[ "$return_code_check_installed" == "1" ]]; then
       install "openssh-server"
-      #TOUNCOMMENT apt install openssh-server
+      apt install openssh-server
     elif [[ "$return_code_check_installed" == "0" ]]; then
       warning "openssh-server isn't installed"
-      #TOUNCOMMENT exit 255
+      exit 255
     fi
   elif [[ "$sshd_installed" == "1" ]]; then
     if [[ "$return_code_check_installed" == "1" ]]; then
       info "Reconfigure openssh-server"
-      #TOUNCOMMENT dpkg --reconfigure openssh-server
+      dpkg --reconfigure openssh-server
     elif [[ "$return_code_check_installed" == "0" ]]; then info "Don't doing anything";
     fi
   fi
@@ -269,7 +264,7 @@ function config_sshd_port_ask() {
   info "Changing port in /etc/ssh/sshd_config"
   sed -i "/Port / s/${current_port}/${port_to_change}/" /etc/ssh/sshd_config
   info "Restarting ssh via systemctl"
-  #TOUNCOMMENT systemctl restart ssh
+  systemctl restart ssh
 }
 
 function config_sshd_port_grep_ask() {
@@ -297,5 +292,5 @@ function main() {
   main_menu_answer=$?
   main_menu_choose "$main_menu_answer"
 }
-#print_color
+
 main
