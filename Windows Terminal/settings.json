@@ -6,24 +6,24 @@
 // To view the default settings, hold "alt" while clicking on the "Settings" button.
 // For documentation on these settings, see : https ://aka.ms/terminal-documentation
 {
-    "$schema" : "https://aka.ms/terminal-profiles-schema",
-// To view the default settings, hold "alt" while clicking on the "Settings" button.
-// For documentation on these settings, see : https ://aka.ms/terminal-documentation
-
-    "defaultProfile" : "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-    "theme" : "system",
-    "tabWidthMode" : "compact",
-    "confirmCloseAllTabs" : false,
-    "launchMode" : "maximized",
-    "copyOnSelect" : true,
-    "copyFormatting" : false,
-    "snapToGridOnResize" : false,
-    "experimental.rendering.forceFullRepaint" : true,
-    "profiles" :
-    {
-        "defaults" :
-        {
-            // Put settings here that you want to apply to all profiles
+	"$schema" : "https://aka.ms/terminal-profiles-schema",
+	// To view the default settings, hold "alt" while clicking on the "Settings" button.
+	// For documentation on these settings, see : https ://aka.ms/terminal-documentation
+	
+	"defaultProfile" : "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+	"theme" : "system",
+	"tabWidthMode" : "compact",
+	"confirmCloseAllTabs" : false,
+	"launchMode" : "maximized",
+	"copyOnSelect" : true,
+	"copyFormatting" : false,
+	"snapToGridOnResize" : false,
+	"experimental.rendering.forceFullRepaint" : true,
+	"profiles" :
+	{
+		"defaults" :
+		{
+			// Put settings here that you want to apply to all profiles
 			"fontFace" : "FiraCode Nerd Font Mono",
 			"fontSize" : 18,
 			"fontWeight" : "semi-light",
@@ -33,53 +33,53 @@
 			"antialiasingMode" : "cleartype",
 			"cursorShape" : "bar",
 			"showTerminalTitleInTitlebar" : true,
-            "snapOnInput" : true,
-            "closeOnExit" : true,
+			"snapOnInput" : true,
+			"closeOnExit" : true,
 			"showTabsInTitlebar" : true
-        },
-        "list" :
-        [
-            {
-                "guid" : "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-                "commandline" : "powershell.exe",
-                "name" : "PowerShell",
-                "hidden" : false,
+		},
+		"list" :
+		[
+			{
+				"guid" : "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+				"commandline" : "powershell.exe",
+				"name" : "PowerShell",
+				"hidden" : false,
 				"tabTitle" : "PowerShell",
 				"colorScheme" : "Brogrammer"
-            },
-            {
-                "guid" : "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-                "commandline" : "cmd.exe",
-                "name" : "CMD",
-                "hidden" : false,
+			},
+			{
+				"guid" : "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+				"commandline" : "cmd.exe",
+				"name" : "CMD",
+				"hidden" : false,
 				"tabTitle" : "CMD",
 				"colorScheme" : "Brogrammer"
-            },
-            {
-                "guid" : "{46ca431a-3a87-5fb3-83cd-11ececc031d2}",
-                "source" : "Windows.Terminal.Wsl",
+			},
+			{
+				"guid" : "{46ca431a-3a87-5fb3-83cd-11ececc031d2}",
+				"source" : "Windows.Terminal.Wsl",
 				"startingDirectory" : "//wsl$/kali-linux/home/pix",
-                "name" : "Kali-linux",
-                "icon" : "Y:/SharedFolder/Pictures/ico/kali-menu.png",
-                "hidden" : false,
+				"name" : "Kali-linux",
+				"icon" : "Y:/SharedFolder/Pictures/ico/kali-menu.png",
+				"hidden" : false,
 				"tabTitle" : "Kali-linux",
 				"colorScheme" : "Argonaut"
-            },
-            {
-                "guid" : "{55ca431a-3a87-5fb3-83cd-11ececc031d2}",
-                "commandline" : "wsl -d kali-linux kex --sl --wtstart -s",
-                "startingDirectory" : "//wsl$/kali-linux/home/pix",
-                "name" : "Win-KeX",
-                "icon" : "Y:/SharedFolder/Pictures/ico/kali-menu.png",
-                "hidden" : false
-            },
-            {
-                "guid" : "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
-                "source" : "Windows.Terminal.Wsl",
+			},
+			{
+				"guid" : "{55ca431a-3a87-5fb3-83cd-11ececc031d2}",
+				"commandline" : "wsl -d kali-linux kex --sl --wtstart -s",
+				"startingDirectory" : "//wsl$/kali-linux/home/pix",
+				"name" : "Win-KeX",
+				"icon" : "Y:/SharedFolder/Pictures/ico/kali-menu.png",
+				"hidden" : false
+			},
+			{
+				"guid" : "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
+				"source" : "Windows.Terminal.Wsl",
 				"startingDirectory" : "//wsl$/Ubuntu-20.04/home/pix",
-                "name" : "Ubuntu 20.04",
-                "icon" : "Y:/SharedFolder/Pictures/ico/ubuntu-menu.png",
-                "hidden" : false,
+				"name" : "Ubuntu 20.04",
+				"icon" : "Y:/SharedFolder/Pictures/ico/ubuntu-menu.png",
+				"hidden" : false,
 				"fontFace" : "Ubuntu Mono",
 				"colorScheme" : "UbuntuLegit",
 				"tabTitle" : "Ubuntu 20.04"
@@ -90,28 +90,28 @@
 				"startingDirectory" : "//wsl$/kali-linux/home/pix/Documents/git",
 				"name" : "Git Bash",
 				"icon" : "%PROGRAMFILES%/Git/mingw64/share/git/git-for-windows.ico",
-				"colorScheme" : "Git Flat UI"
+				"colorScheme" : "Brogrammer"
 			},
 			{
-                "guid" : "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-                "hidden" : true,
-                "source" : "Windows.Terminal.Azure",
-                "name" : "Azure Cloud Shell"
-            }
-        ]
-    },
-
-    // Add custom color schemes to this array
+				"guid" : "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+				"hidden" : true,
+				"source" : "Windows.Terminal.Azure",
+				"name" : "Azure Cloud Shell"
+			}
+		]
+	},
+	
+	// Add custom color schemes to this array
 	// More schemes at https ://github.com/mbadolato/iTerm2-Color-Schemes
-    "schemes" :
+	"schemes" :
 	[
 		{
-	// Default color scheme
+			// Default color scheme
 			"name" : "Campbell",
-
+			
 			"foreground" : "#F2F2F2",
 			"background" : "#0C0C0C",
-
+			
 			"black" : "#0C0C0C",
 			"blue" : "#0037DA",
 			"brightBlack" : "#767676",
@@ -130,34 +130,36 @@
 			"yellow" : "#C19C00"
 		},
 		{
-    		"name" : "Dracula",
-    		"cursorColor" : "#F8F8F2",
-    		"selectionBackground" : "#44475A",
-    		"background" : "#282A36",
-    		"foreground" : "#F8F8F2",
-    		"black" : "#21222C",
-    		"blue" : "#BD93F9",
-    		"cyan" : "#8BE9FD",
-    		"green" : "#50FA7B",
-    		"purple" : "#FF79C6",
-    		"red" : "#FF5555",
-    		"white" : "#F8F8F2",
-    		"yellow" : "#F1FA8C",
-    		"brightBlack" : "#6272A4",
-    		"brightBlue" : "#D6ACFF",
-    		"brightCyan" : "#A4FFFF",
-    		"brightGreen" : "#69FF94",
-    		"brightPurple" : "#FF92DF",
-    		"brightRed" : "#FF6E6E",
-    		"brightWhite" : "#FFFFFF",
-    		"brightYellow" : "#FFFFA5"
+			"name" : "Dracula",
+			
+			"cursorColor" : "#F8F8F2",
+			"selectionBackground" : "#44475A",
+			
+			"background" : "#282A36",
+			"foreground" : "#F8F8F2",
+			"black" : "#21222C",
+			"blue" : "#BD93F9",
+			"cyan" : "#8BE9FD",
+			"green" : "#50FA7B",
+			"purple" : "#FF79C6",
+			"red" : "#FF5555",
+			"white" : "#F8F8F2",
+			"yellow" : "#F1FA8C",
+			"brightBlack" : "#6272A4",
+			"brightBlue" : "#D6ACFF",
+			"brightCyan" : "#A4FFFF",
+			"brightGreen" : "#69FF94",
+			"brightPurple" : "#FF92DF",
+			"brightRed" : "#FF6E6E",
+			"brightWhite" : "#FFFFFF",
+			"brightYellow" : "#FFFFA5"
 		},
 		{
 			"name" : "Ubuntu",
-
+			
 			"foreground" : "#EEEEEC",
 			"background" : "#2C001E",
-
+			
 			"black" : "#EEEEEC",
 			"blue" : "#268BD2",
 			"brightBlack" : "#002B36",
@@ -177,10 +179,10 @@
 		},
 		{
 			"name" : "UbuntuLegit",
-
+			
 			"foreground" : "#EEEEEE",
 			"background" : "#2C001E",
-
+			
 			"black" : "#4E9A06",
 			"blue" : "#3465A4",
 			"brightBlack" : "#555753",
@@ -200,10 +202,10 @@
 		},
 		{
 			"name" : "One Half Dark",
-
+			
 			"foreground" : "#F2F2F2",
 			"background" : "#282C34",
-
+			
 			"black" : "#282C34",
 			"blue" : "#61AFEF",
 			"brightBlack" : "#5A6374",
@@ -223,10 +225,10 @@
 		},
 		{
 			"name" : "Git Flat UI",
-
+			
 			"foreground" : "#DCDFE4",
 			"background" : "#1A1A1A",
-
+			
 			"black" : "#282C34",
 			"blue" : "#61AFEF",
 			"brightBlack" : "#5A6374",
@@ -246,10 +248,10 @@
 		},
 		{
 			"name" : "Argonaut",
-
+			
 			"background" : "#0e1019",
 			"foreground" : "#fffaf4",
-
+			
 			"black" : "#232323",
 			"red" : "#ff000f",
 			"green" : "#8ce10b",
@@ -269,10 +271,10 @@
 		},
 		{
 			"name" : "Breeze",
-
+			
 			"background" : "#31363b",
 			"foreground" : "#eff0f1",
-
+			
 			"black" : "#31363b",
 			"red" : "#ed1515",
 			"green" : "#11d116",
@@ -292,10 +294,10 @@
 		},
 		{
 			"name" : "Brogrammer",
-
+			
 			"background" : "#131313",
 			"foreground" : "#d6dbe5",
-
+			
 			"black" : "#1f1f1f",
 			"red" : "#f81118",
 			"green" : "#2dc55e",
@@ -315,10 +317,10 @@
 		},
 		{
 			"name" : "Builtin Tango Dark",
-
+			
 			"background" : "#000000",
 			"foreground" : "#ffffff",
-
+			
 			"black" : "#000000",
 			"red" : "#cc0000",
 			"green" : "#4e9a06",
@@ -338,10 +340,10 @@
 		},
 		{
 			"name" : "Chalk",
-
+			
 			"background" : "#2b2d2e",
 			"foreground" : "#d2d8d9",
-
+			
 			"black" : "#7d8b8f",
 			"red" : "#b23a52",
 			"green" : "#789b6a",
@@ -361,10 +363,10 @@
 		},
 		{
 			"name" : "Cobalt2",
-
+			
 			"background" : "#132738",
 			"foreground" : "#ffffff",
-
+			
 			"black" : "#000000",
 			"red" : "#ff0000",
 			"green" : "#38de21",
@@ -384,10 +386,10 @@
 		},
 		{
 			"name" : "Dark+",
-
+			
 			"background" : "#0e0e0e",
 			"foreground" : "#cccccc",
-
+			
 			"black" : "#000000",
 			"red" : "#cd3131",
 			"green" : "#0dbc79",
@@ -407,7 +409,7 @@
 		},
 		{
 			"name" : "Darkside",
-
+			
 			"background" : "#222324",
 			"foreground" : "#bababa",
 			
@@ -429,27 +431,27 @@
 			"brightWhite" : "#bababa"
 		}
 	],
-
-    // Add any keybinding overrides to this array.
-    // To unbind a default keybinding, set the command to "unbound"
-    "keybindings" : [],
-
-    
-    "actions" :
-    [
-        // Copy and paste are bound to Ctrl+Shift+C and Ctrl+Shift+V in your defaults.json.
-        // These two lines additionally bind them to Ctrl+C and Ctrl+V.
-        // To learn more about selection, visit https ://aka.ms/terminal-selection
-        { "command" : {"action" : "copy", "singleLine" : false }, "keys" : "ctrl+c" },
-        { "command" : "paste", "keys" : "ctrl+v" },
-
-        // Press Ctrl+Shift+F to open the search box
-        { "command" : "find", "keys" : "ctrl+shift+f" },
-
-        // Press Alt+Shift+D to open a new pane.
-        // - "split" : "auto" makes this pane open in the direction that provides the most surface area.
-        // - "splitMode" : "duplicate" makes the new pane use the focused pane's profile.
-        // To learn more about panes, visit https ://aka.ms/terminal-panes
-        { "command" : { "action" : "splitPane", "split" : "auto", "splitMode" : "duplicate" }, "keys" : "alt+shift+d" }
-    ]
+	
+	// Add any keybinding overrides to this array.
+	// To unbind a default keybinding, set the command to "unbound"
+	"keybindings" : [],
+	
+	
+	"actions" :
+	[
+		// Copy and paste are bound to Ctrl+Shift+C and Ctrl+Shift+V in your defaults.json.
+		// These two lines additionally bind them to Ctrl+C and Ctrl+V.
+		// To learn more about selection, visit https ://aka.ms/terminal-selection
+		{ "command" : {"action" : "copy", "singleLine" : false }, "keys" : "ctrl+c" },
+		{ "command" : "paste", "keys" : "ctrl+v" },
+		
+		// Press Ctrl+Shift+F to open the search box
+		{ "command" : "find", "keys" : "ctrl+shift+f" },
+		
+		// Press Alt+Shift+D to open a new pane.
+		// - "split" : "auto" makes this pane open in the direction that provides the most surface area.
+		// - "splitMode" : "duplicate" makes the new pane use the focused pane's profile.
+		// To learn more about panes, visit https ://aka.ms/terminal-panes
+		{ "command" : { "action" : "splitPane", "split" : "auto", "splitMode" : "duplicate" }, "keys" : "alt+shift+d" }
+	]
 }
