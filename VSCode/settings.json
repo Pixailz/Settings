@@ -1,70 +1,48 @@
 {
-    "editor.tokenColorCustomizations": {
-        "textMateRules": [
-            
-        ],
-    },
-    "workbench.colorCustomizations": {
-        "activityBar.foreground": "#bae67e",
-        "activityBarBadge.background": "#bae67e",
-        "badge.background": "#bae67e",
-        "button.background": "#bae67e",
-        "editorCursor.foreground": "#bae67e",
-        "editorSuggestWidget.highlightForeground": "#bae67e",
-        "editor.findMatchBorder": "#bae67e",
-        "editor.findMatchBackground": "#1f2430",
-        "editor.findMatchHighlightBackground": "#1f2430",
-        "editor.findMatchHighlightBorder": "#bae67e",
-        "extensionButton.prominentHoverBackground": "#bae67e",
-        "extensionButton.prominentBackground": "#bae67e",
-        "focusBorder": "#e67e7e",
-        "foreground": "#bae67e",
-        "icon.foreground": "#bae67e",
-        "list.hoverForeground": "#bae67e",
-        "list.activeSelectionForeground": "#bae67e",
-        "list.inactiveSelectionForeground": "#bae67e",
-        "list.highlightForeground": "#bae67e",
-        "list.warningForeground": "#f7c664",
-        "menu.foreground": "#bae67e",
-        "menu.border": "#bae67e",
-        "minimap.findMatchHighlight": "#00b7ff",
-        "sideBar.foreground": "#bae67e",
-        "sideBarTitle.foreground": "#bae67e",
-        "sideBarSectionHeader.foreground": "#8b8b8b",
-        "sideBar.border": "#bae67e",
-        "statusBar.foreground": "#bae67e",
-        "statusBar.border": "#bae67e",
-        "tab.activeForeground": "#bae67e",
-        "tab.inactiveForeground": "#bae67e",
-        "tab.activeBorder": "#bae67e",
-        "tab.hoverBorder": "#8b8b8b",
-        "titleBar.activeForeground": "#bae67e",
-        "panel.border": "#bae67e",
-        "panelTitle.activeBorder": "#bae67e",
-        "textLink.foreground": "#efffd7",
-        "button.hoverBackground": "#729245"
-    },
-    /*
-    #f7c664
-    #8b8b8b
-    */
-    "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
-    "explorer.confirmDelete": false,
-    "diffEditor.ignoreTrimWhitespace": true,
-    "diffEditor.renderSideBySide": false,
-    "indentOnPaste.pasteMethod": "workaround",
-    "C_Cpp.updateChannel": "Insiders",
-    "git.enableSmartCommit": true,
-    "git.confirmSync": false,
-    "explorer.confirmDragAndDrop": false,
-    "editor.renderControlCharacters": false,
+    "_comment": "CUSTOM SETTINGS",
+    "files.eol": "\n",
+
+    "editor.cursorStyle": "line-thin",
+    "editor.fontFamily": "Fira Code",
     "editor.fontLigatures": true,
-    "workbench.iconTheme": "ayu",
-    "window.zoomLevel": 0,
-    "workbench.colorTheme": "Ayu Mirage",
-    "editor.largeFileOptimizations": false,
+    "editor.fontSize": 22,
+    "editor.minimap.enabled": false,
+    "editor.wordWrap": "on",
+    "editor.tabSize": 4,
+    "editor.fontWeight": "normal",
     "editor.suggestSelection": "first",
+
+    "python.languageServer": "Microsoft",
+    "python.analysis.disabled": [
+        "unresolved-import",
+        "no-self-argument",
+        "no-method-argument",
+        "Python(undefined-variable)"
+    ],
+    "terminal.integrated.fontFamily": "Fira Code",
+    "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+
+    "zenMode.hideLineNumbers": false,
+
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-    "java.configuration.checkProjectSettingsExclusions": false,
-    "editor.fontFamily": "Fira Code"
+
+    "workbench.colorTheme": "One Dark Pro",
+    "workbench.settings.editor": "json",
+    
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+
+    "git.enableSmartCommit": true,
+
+    "window.zoomLevel": 0,
+
+    "notebook.kernelProviderAssociations": [
+    ],
+
+    "settingsSync.ignoredSettings": [
+    ],
+
+    "[shellscript]": {
+        "editor.defaultFormatter": "shakram02.bash-beautify"
+    },
 }
