@@ -10,7 +10,7 @@
 	// To view the default settings, hold "alt" while clicking on the "Settings" button.
 	// For documentation on these settings, see : https ://aka.ms/terminal-documentation
 	
-	"defaultProfile" : "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+	"defaultProfile" : "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
 	"theme" : "system",
 	"tabWidthMode" : "compact",
 	"confirmCloseAllTabs" : false,
@@ -24,10 +24,10 @@
 		"defaults" :
 		{
 			// Put settings here that you want to apply to all profiles
-			"fontFace" : "FiraCode Nerd Font Mono",
-			"fontSize" : 18,
+			"fontFace" : "FiraCode Nerd Font",
+			"fontSize" : 14,
 			"fontWeight" : "semi-light",
-			"acrylicOpacity" : 0.50,
+			"acrylicOpacity" : 0.60,
 			"useAcrylic" : true,
 			"padding" : "2, 2, 2, 2",
 			"antialiasingMode" : "cleartype",
@@ -60,7 +60,7 @@
 				"source" : "Windows.Terminal.Wsl",
 				"startingDirectory" : "//wsl$/kali-linux/home/pix",
 				"name" : "Kali-linux",
-				"icon" : "Y:/SharedFolder/Pictures/ico/kali-menu.png",
+				"icon" : "Y:/SharedFolder/Media/Pictures/ico/kali-menu.png",
 				"hidden" : false,
 				"tabTitle" : "Kali-linux",
 				"colorScheme" : "Argonaut"
@@ -70,7 +70,7 @@
 				"commandline" : "wsl -d kali-linux kex --sl --wtstart -s",
 				"startingDirectory" : "//wsl$/kali-linux/home/pix",
 				"name" : "Win-KeX",
-				"icon" : "Y:/SharedFolder/Pictures/ico/kali-menu.png",
+				"icon" : "Y:/SharedFolder/Media/Pictures/ico/kali-menu.png",
 				"hidden" : false
 			},
 			{
@@ -78,7 +78,7 @@
 				"source" : "Windows.Terminal.Wsl",
 				"startingDirectory" : "//wsl$/Ubuntu-20.04/home/pix",
 				"name" : "Ubuntu 20.04",
-				"icon" : "Y:/SharedFolder/Pictures/ico/ubuntu-menu.png",
+				"icon" : "Y:/SharedFolder/Media/Pictures/ico/ubuntu-menu.png",
 				"hidden" : false,
 				"fontFace" : "Ubuntu Mono",
 				"colorScheme" : "UbuntuLegit",
@@ -452,6 +452,25 @@
 		// - "split" : "auto" makes this pane open in the direction that provides the most surface area.
 		// - "splitMode" : "duplicate" makes the new pane use the focused pane's profile.
 		// To learn more about panes, visit https ://aka.ms/terminal-panes
-		{ "command" : { "action" : "splitPane", "split" : "auto", "splitMode" : "duplicate" }, "keys" : "alt+shift+d" }
+		{ "command" : { "action" : "splitPane", "split" : "auto", "splitMode" : "duplicate" }, "keys" : "alt+shift+d" },
+
+		{ "command" : "closeWindow", "keys": "alt+f4"},
+		{ "command" : "toggleFullscreen", "keys": "f11"},
+		{ "command" : "toggleFocusMode", "keys": "shift+f11"},
+		{ "command" : "closeTab", "keys": "ctrl+w"},
+		{ "command" : "closeOtherTab", "keys": "ctrl+shift+w"},
+		{ "command": "duplicateTab", "keys": "ctrl+shift+d" },
+		{ "command": "newTab", "keys": "ctrl+shift+t" },
+		{ "command": { "action": "newTab", "index": 0 }, "keys": "ctrl+shift+1" },
+		{ "command": { "action": "newTab", "index": 1 }, "keys": "ctrl+shift+2" },
+		{ "command": { "action": "newTab", "index": 2 }, "keys": "ctrl+shift+3" },
+		{ "command": { "action": "newTab", "index": 3 }, "keys": "ctrl+shift+4" },
+		{ "command": { "action": "newTab", "index": 4 }, "keys": "ctrl+shift+5" },
+		{ "command": { "action": "newTab", "index": 5 }, "keys": "ctrl+shift+6" },
+		{ "command": { "action": "newTab", "index": 6 }, "keys": "ctrl+shift+7" },
+		{ "command": { "action": "newTab", "index": 7 }, "keys": "ctrl+shift+8" },
+		{ "command": { "action": "newTab", "index": 8 }, "keys": "ctrl+shift+9" },
+		{ "command": "nextTab", "keys": "ctrl+tab" },
+		{ "command": "prevTab", "keys": "ctrl+shift+tab" },
 	]
 }
