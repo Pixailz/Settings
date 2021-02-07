@@ -1,20 +1,47 @@
 {
-    "_comment": "CUSTOM SETTINGS",
-    "files.eol": "\n",
+    //CUSTOM SETTINGS
 
+    // EDITOR_CURSOR
     "editor.cursorStyle": "line-thin",
     "editor.cursorBlinking": "expand",
 
+    // EDITOR_FONT
     "editor.fontFamily": "Input",
+    "editor.fontWeight": "normal",
     "editor.fontLigatures": true,
     "editor.fontSize": 16,
 
+    // EDITOR_OTHERS
     "editor.minimap.enabled": false,
     "editor.wordWrap": "on",
     "editor.tabSize": 4,
-    "editor.fontWeight": "normal",
     "editor.suggestSelection": "first",
+    "diffEditor.ignoreTrimWhitespace": false,
 
+    // EXPLORER
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "explorer.incrementalNaming": "smart",
+    "explorer.openEditors.visible": 0,
+
+    // EXTENSIONS
+    "extensions.autoCheckUpdates": true,
+    "extensions.autoUpdate": true,
+    "extensions.ignoreRecommendations": false,
+
+    // FILES
+    "files.autoSave": "onWindowChange",
+    "files.eol": "auto",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+
+    // GIT
+    "git.enableSmartCommit": false,
+
+    //KEYBOARD
+    "keyboard.touchbar.enabled": true,
+
+    // PYTHON
     "python.languageServer": "Microsoft",
     "python.analysis.disabled": [
         "unresolved-import",
@@ -22,30 +49,43 @@
         "no-method-argument",
         "Python(undefined-variable)"
     ],
+
+    // TERMINAL
     "terminal.integrated.fontFamily": "Monoid Retina",
-    "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
 
-    "zenMode.hideLineNumbers": false,
+    "terminal.explorerKind": "integrated",
+    "terminal.external.linuxExec": "xterm",
+    "terminal.external.osxExec": "Terminal.app",
+    "terminal.external.windowsExec": "C:\\WINDOWS\\System32\\cmd.exe",
+    "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
+    //"terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
 
+    // VSCODE
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-    
-    "workbench.settings.editor": "json",
+
+    // WINDOWS
+    "window.openFoldersInNewWindow": "off",
+    "window.zoomLevel": 0,
+    "window.titleSeparator": " ~ ",
+    "window.title": "${folderName}${separator}${activeEditorMedium}${separator}${dirty}",
+
+    // WORKBENCH
     "workbench.iconTheme": "Monokai Pro (Filter Machine) Icons",
     "workbench.colorTheme": "Monokai Pro (Filter Machine)",
+    "workbench.settings.editor": "json",
 
-    "diffEditor.ignoreTrimWhitespace": false,
+    // ZENMODE
+    "zenMode.hideLineNumbers": false,
 
-    "explorer.confirmDelete": false,
-    "explorer.confirmDragAndDrop": false,
-
-    "git.enableSmartCommit": true,
-
-    "window.zoomLevel": 0,
-
-    "notebook.kernelProviderAssociations": [
+    // SYNC
+    "settingsSync.ignoredExtensions": [
     ],
 
     "settingsSync.ignoredSettings": [
+
     ],
 
+    // OTHERS
+    "notebook.kernelProviderAssociations": [
+    ]
 }
